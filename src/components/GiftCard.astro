@@ -1,0 +1,39 @@
+---
+import { formatDate, imageSource, merchantLabel, tagSlug, type Gift } from "../lib/gifts";
+import BuyLink from "./BuyLink.astro";
+
+interface Props {
+  gift: Gift;
+}
+
+const { gift } = Astro.props;
+const { title, description, image, imageAlt, merchant, tags, dateAdded, draft, slug, priceNote } = gift.data;
+const example = title.startsWith("EXAMPLE:");
+---
+
+<article class="card">
+  <a class="card-media" href={`/gifts/${slug}/`}>
+    <img src={imageSource(image)} alt={imageAlt} loading="lazy" decoding="async" />
+    {draft && <span class="ribbon">{example ? "Example draft" : "Draft"}</span>}
+  </a>
+  <div class="card-body">
+    <p class="card-meta">
+      <span class="merchant">{merchantLabel(merchant)}</span>
+      <time datetime={dateAdded.toISOString().slice(0, 10)}>{formatDate(dateAdded)}</time>
+    </p>
+    <h2><a href={`/gifts/${slug}/`}>{title}</a></h2>
+    <p class="blurb">{description}</p>
+    <ul class="tags">
+      {tags.map((tag) => (
+        <li><a href={`/tags/${tagSlug(tag)}/`}>{tag}</a></li>
+      ))}
+    </ul>
+    {priceNote && (
+      <p class="price-note">
+        <span>Price note</span>
+        {priceNote}
+      </p>
+    )}
+    <BuyLink href={gift.data.affiliateUrl} merchant={merchant} />
+  </div>
+</article>

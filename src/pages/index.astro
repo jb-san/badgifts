@@ -1,0 +1,77 @@
+---
+import GiftGrid from "../components/GiftGrid.astro";
+import { getGifts } from "../lib/gifts";
+import { siteName } from "../lib/seo";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export const prerender = true;
+
+const gifts = await getGifts();
+const description =
+  "Funny, weird, and gag gifts with the punch of a novelty aisle. Real merchant links, and no invented prices.";
+const site = Astro.site;
+if (!site) throw new Error("site missing");
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteName,
+  url: new URL("/", site).href,
+  description,
+};
+---
+
+<BaseLayout
+  title="Home"
+  fullTitle="Bad Gifts — funny, weird, and gag gifts"
+  description={description}
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Aisle 13 · gag gifts only</p>
+      <h1>Presents they will have to explain.</h1>
+      <p class="lede">
+        Funny, weird, and gag gifts for people you like. We write the joke, the buy button leaves
+        this site, and a price shows up only when somebody actually checked one.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="#gifts">Browse the aisle</a>
+        <a class="btn btn-line" href="/tags/">Shop by bad idea</a>
+      </div>
+    </div>
+    <aside class="hero-card">
+      <div class="hero-card-inner">
+        <p class="stamp">Zero practical value</p>
+        <h2>100% gag. 0% homework.</h2>
+        <ul>
+          <li>Weird on purpose</li>
+          <li>Office-hostile, not people-hostile</li>
+          <li>Prices omitted until they are real</li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+
+  <section id="gifts" aria-labelledby="aisle-title">
+    <div class="section-head">
+      <h2 id="aisle-title">The aisle</h2>
+      <p>{gifts.length ? "Newest disasters first." : "Published gifts will land here."}</p>
+    </div>
+    {
+      gifts.length ? (
+        <GiftGrid gifts={gifts} />
+      ) : (
+        <div class="empty">
+          <p class="stamp">Back room</p>
+          <h2>The shelf is clear on purpose.</h2>
+          <p>
+            Real gifts show up in this grid, newest first, after an entry is added and{" "}
+            <code>draft</code> is set to false. The sample entries stay drafts so a production
+            build cannot publish placeholder links.
+          </p>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

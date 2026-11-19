@@ -1,0 +1,40 @@
+---
+import { getTags } from "../../lib/gifts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = true;
+
+const tags = await getTags();
+const description = "Browse Bad Gifts by who it is for, how weird it is, and where it will cause a scene.";
+---
+
+<BaseLayout title="Tags" description={description}>
+  <div class="page page-wide">
+    <p class="eyebrow">Categories</p>
+    <h1>Shop by bad idea.</h1>
+    <p class="lede">
+      Tags are whatever the gift entry says: for him, for her, under $25, weird, office, gamers,
+      NSFW-ish, or a new one you invent.
+    </p>
+    {
+      tags.length ? (
+        <ul class="tag-index">
+          {tags.map((entry) => (
+            <li>
+              <a href={`/tags/${entry.slug}/`}>
+                {entry.tag}
+                <span>{entry.gifts.length}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="empty">
+          <p class="stamp">No piles yet</p>
+          <h2>Tags show up with the gifts.</h2>
+          <p>Publish an entry and its tags get a page. Drafts do not count in production.</p>
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

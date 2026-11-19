@@ -1,0 +1,22 @@
+---
+import { buyLabel, type Merchant } from "../lib/gifts";
+
+interface Props {
+  href: string;
+  merchant: Merchant;
+}
+
+const { href, merchant } = Astro.props;
+const label = buyLabel(merchant);
+---
+
+<p class="card-actions">
+  <a class="buy" href={href} rel="sponsored nofollow noopener" target="_blank">
+    {label}
+    <span class="sr-only"> (opens in a new tab)</span>
+  </a>
+  <span class="disclosure">
+    Affiliate link. If you buy, we may earn a commission.{" "}
+    <a href="/disclosure/">Disclosure</a>
+  </span>
+</p>

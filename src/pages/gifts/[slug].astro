@@ -1,0 +1,81 @@
+---
+import { render } from "astro:content";
+import BuyLink from "../../components/BuyLink.astro";
+import { formatDate, getGifts, imageSource, merchantLabel, tagSlug } from "../../lib/gifts";
+import { giftJsonLd } from "../../lib/seo";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const gifts = await getGifts();
+  return gifts.map((gift) => ({
+    params: { slug: gift.data.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const gift = (await getGifts()).find((entry) => entry.data.slug === slug);
+if (!gift || !Astro.site) {
+  throw new Error(`Missing gift for ${slug}`);
+}
+
+const { Content } = await render(gift);
+const image = imageSource(gift.data.image);
+const primaryTag = gift.data.tags[0];
+const example = gift.data.title.startsWith("EXAMPLE:");
+---
+
+<BaseLayout
+  title={gift.data.title}
+  description={gift.data.description}
+  ogType="article"
+  image={image}
+  imageAlt={gift.data.imageAlt}
+  jsonLd={giftJsonLd(gift, Astro.site, Astro.url.pathname)}
+>
+  <article class="gift">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">The aisle</a>
+      <span aria-hidden="true">/</span>
+      {primaryTag && <a href={`/tags/${tagSlug(primaryTag)}/`}>{primaryTag}</a>}
+    </nav>
+    <div class="gift-layout">
+      <div class="gift-media">
+        <img src={image} alt={gift.data.imageAlt} decoding="async" />
+        {gift.data.draft && <span class="ribbon">{example ? "Example draft" : "Draft"}</span>}
+      </div>
+      <div>
+        <p class="card-meta">
+          <span class="merchant">{merchantLabel(gift.data.merchant)}</span>
+          <time datetime={gift.data.dateAdded.toISOString().slice(0, 10)}>
+            {formatDate(gift.data.dateAdded)}
+          </time>
+        </p>
+        <h1>{gift.data.title}</h1>
+        <p class="lede">{gift.data.description}</p>
+        <ul class="tags">
+          {
+            gift.data.tags.map((tag) => (
+              <li>
+                <a href={`/tags/${tagSlug(tag)}/`}>{tag}</a>
+              </li>
+            ))
+          }
+        </ul>
+        {
+          gift.data.priceNote && (
+            <p class="price-note">
+              <span>Price note</span>
+              {gift.data.priceNote}
+            </p>
+          )
+        }
+        <BuyLink href={gift.data.affiliateUrl} merchant={gift.data.merchant} />
+      </div>
+    </div>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

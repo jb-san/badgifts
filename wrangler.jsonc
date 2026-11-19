@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "badgifts",
+  // Static builds omit this entry and upload dist/client as assets.
+  // It stays so a future on-demand route can use the same Worker.
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-11-19",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist/client",
+    "not_found_handling": "404-page"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
