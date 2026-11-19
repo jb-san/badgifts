@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export const prerender = true;
+
+const description =
+  "Bad Gifts is an affiliate gag shop for funny and weird presents. Jokes on the gift, never on a group of people.";
+const site = Astro.site;
+if (!site) throw new Error("site missing");
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "About Bad Gifts",
+  url: new URL(Astro.url.pathname, site).href,
+  description,
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Bad Gifts",
+    url: new URL("/", site).href,
+  },
+};
+---
+
+<BaseLayout title="About" description={description} jsonLd={jsonLd}>
+  <article class="page prose">
+    <p class="eyebrow">The shop</p>
+    <h1>About Bad Gifts.</h1>
+    <p>
+      Bad Gifts is a gag aisle on the internet. We collect funny, weird, and lightly feral present
+      ideas, write the joke, and send you to the merchant if you actually want the object.
+    </p>
+    <p>
+      We do not sell the products, ship the boxes, or invent a price to make a card look finished.
+      A price note appears only after a real price has been checked. No star ratings. No fake
+      reviews. No made-up markdown.
+    </p>
+    <h2>The joke has a limit</h2>
+    <p>
+      The tone is a novelty shop: loud, specific, and aimed at the gift. It is not aimed at a
+      person, a body, or a group. If a joke needs a target to work, it does not belong on the
+      shelf. Edgy is fine. Hateful is not.
+    </p>
+    <h2>How something gets out of the back room</h2>
+    <p>
+      An entry stays a draft until someone sets <code>draft</code> to <code>false</code>. Drafts
+      are visible in <code>npm run dev</code> and absent from <code>npm run build</code>. Placeholder
+      affiliate links are refused if a draft is flipped to published by mistake.
+    </p>
+    <p>
+      This is an affiliate site. The merchant gets the order. We might get a commission.{" "}
+      <a href="/disclosure/">The disclosure</a> is the plain version of that.
+    </p>
+  </article>
+</BaseLayout>

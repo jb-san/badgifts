@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img">
+  <rect width="640" height="640" fill="#d6ff4a"/>
+  <circle cx="330" cy="340" r="220" fill="#fffdf8" stroke="#1a1024" stroke-width="10"/>
+  <path d="M250 150c48-62 150-48 168 28 36 8 78 58 62 142-14 92-18 150-72 198-58 52-150 36-178-28-28-62-8-130 8-186 14-46-18-96 12-154z" fill="#6fbf3a" stroke="#1a1024" stroke-width="10"/>
+  <circle cx="292" cy="230" r="16" fill="#3f8f22" stroke="#1a1024" stroke-width="6"/>
+  <circle cx="390" cy="300" r="13" fill="#3f8f22" stroke="#1a1024" stroke-width="6"/>
+  <circle cx="318" cy="430" r="18" fill="#3f8f22" stroke="#1a1024" stroke-width="6"/>
+  <ellipse cx="300" cy="290" rx="32" ry="38" fill="#fffdf8" stroke="#1a1024" stroke-width="8"/>
+  <ellipse cx="382" cy="278" rx="32" ry="38" fill="#fffdf8" stroke="#1a1024" stroke-width="8"/>
+  <circle cx="310" cy="298" r="11" fill="#1a1024"/>
+  <circle cx="392" cy="286" r="11" fill="#1a1024"/>
+  <ellipse cx="346" cy="390" rx="52" ry="40" fill="#1a1024"/>
+  <path d="M306 378c18 30 62 32 84-2" fill="#ff2f78"/>
+  <rect x="322" y="360" width="16" height="22" rx="3" fill="#fffdf8"/>
+  <rect x="346" y="354" width="16" height="24" rx="3" fill="#fffdf8"/>
+  <path d="M214 360c-46 8-74 48-58 78" fill="none" stroke="#1a1024" stroke-width="12" stroke-linecap="round"/>
+  <path d="M470 330c48 4 70 40 54 78" fill="none" stroke="#1a1024" stroke-width="12" stroke-linecap="round"/>
+  <path d="M96 168c-8-36 22-62 48-48M520 150c36-16 70 8 62 42" fill="none" stroke="#1a1024" stroke-width="10" stroke-linecap="round"/>
+  <g transform="rotate(-8 130 108)">
+    <rect x="48" y="72" width="168" height="46" fill="#ffe14a" stroke="#1a1024" stroke-width="6"/>
+    <text x="62" y="104" font-family="Arial Black, Impact, sans-serif" font-size="26" fill="#1a1024">EXAMPLE</text>
+  </g>
+</svg>

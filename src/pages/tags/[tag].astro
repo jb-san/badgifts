@@ -1,0 +1,38 @@
+---
+import GiftGrid from "../../components/GiftGrid.astro";
+import { getTags } from "../../lib/gifts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const tags = await getTags();
+  return tags.map((entry) => ({
+    params: { tag: entry.slug },
+  }));
+}
+
+const { tag } = Astro.params;
+const match = (await getTags()).find((entry) => entry.slug === tag);
+if (!match) {
+  throw new Error(`Missing tag ${tag}`);
+}
+
+const description = `Funny and weird gifts filed under ${match.tag}. Newest first, with the joke included.`;
+---
+
+<BaseLayout title={match.tag} description={description}>
+  <section class="gift">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">The aisle</a>
+      <span aria-hidden="true">/</span>
+      <a href="/tags/">Tags</a>
+    </nav>
+    <p class="eyebrow">Tag</p>
+    <h1>{match.tag}</h1>
+    <p class="lede">
+      {match.gifts.length} {match.gifts.length === 1 ? "gift" : "gifts"} in this pile, newest first.
+    </p>
+    <GiftGrid gifts={match.gifts} />
+  </section>
+</BaseLayout>

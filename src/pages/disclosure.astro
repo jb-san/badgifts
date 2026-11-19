@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export const prerender = true;
+
+const description =
+  "Bad Gifts uses affiliate links. A commission does not raise the price you pay, and we are not the seller.";
+const site = Astro.site;
+if (!site) throw new Error("site missing");
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Affiliate disclosure",
+  url: new URL(Astro.url.pathname, site).href,
+  description,
+};
+---
+
+<BaseLayout title="Affiliate disclosure" description={description} jsonLd={jsonLd}>
+  <article class="page prose">
+    <p class="eyebrow">The fine print, in a normal voice</p>
+    <h1>Affiliate disclosure.</h1>
+    <p>
+      Bad Gifts links to other stores. Some of those links are affiliate links. If you buy through
+      one, the merchant's program may pay us a commission. That commission does not raise the price
+      you pay at checkout.
+    </p>
+    <p>
+      We are not the seller. Stock, shipping, returns, and the price on the day you order live on
+      the merchant site and can change after we look. A price note is printed only when it was
+      checked against a real price. If you do not see one, we did not have a price worth printing.
+      We do not guess.
+    </p>
+    <p>
+      Every buy button uses <code>rel="sponsored nofollow noopener"</code> and opens in a new tab.
+      A short version of this disclosure sits next to the button.
+    </p>
+    <p>
+      Merchants we expect to link include Amazon, Etsy, AliExpress, and other shops. The gift page
+      names which one the button goes to.
+    </p>
+    <h2>Amazon, when there is actually an account</h2>
+    <p>
+      This site is not enrolled in Amazon Associates. Amazon requires associates to show a sentence
+      like “As an Amazon Associate I earn from qualifying purchases.” Add that sentence here after
+      an account is approved. It is not a claim this shop can make yet.
+    </p>
+    <p>
+      Sample entries in the repo are marked <code>draft: true</code> and point at placeholder URLs.
+      Production builds leave them out.
+    </p>
+    <p>This page is a plain-language disclosure, not legal advice.</p>
+  </article>
+</BaseLayout>

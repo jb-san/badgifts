@@ -1,0 +1,14 @@
+---
+import type { Gift } from "../lib/gifts";
+import GiftCard from "./GiftCard.astro";
+
+interface Props {
+  gifts: Gift[];
+}
+
+const { gifts } = Astro.props;
+---
+
+<div class="gift-grid">
+  {gifts.map((gift) => <GiftCard gift={gift} />)}
+</div>
